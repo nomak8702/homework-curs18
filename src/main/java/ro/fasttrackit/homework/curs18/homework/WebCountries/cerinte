@@ -1,0 +1,34 @@
+1)Read the countries from file
+
+It has format
+
+name|capital|population|area|continent|neighbour1~neighbour2
+
+also generate an ID for each country
+
+read it in CountryReader and populate the CountryService in its constructor (as in Course Code)
+
+2) build the country endpoints offering the following behavior
+
+- list all countries: /countries -> returns a list of country objects
+
+- list all country names : /countries/names -> returns a list of strings
+
+- get capital of a country : /countries/<countryId>/capital -> returns a string
+
+- get population of a country : /countries/<countryId>/population -> returns a long
+
+- get countries in continent : /continents/<continentName>/countries -> returns list of Country objects
+
+- get country neighbours : /countries/<countryId>/neighbours -> returns list of Strings
+
+- get countries in <continent> with population larger than <population> :
+ /continents/<continentName>/countries?minPopulation=<minimum population> -> returns list of Country objects
+
+- get countries that neighbor X but not neighbor Y :
+/countries?includeNeighbour=<includedNeighbourCode>&excludeNeighbour=<excludedNeighbourCode>
+-> returns list of Country objects
+
+- get map from country to population : /countries/population -> returns map from String to Long
+
+- get map from continent to list of countries : /continents/countries  -> returns Map from String to List<Country>
