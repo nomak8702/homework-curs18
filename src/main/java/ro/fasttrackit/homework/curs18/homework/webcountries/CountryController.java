@@ -1,4 +1,4 @@
-package ro.fasttrackit.homework.curs18.homework.WebCountries;
+package ro.fasttrackit.homework.curs18.homework.webcountries;
 
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,12 +38,12 @@ public class CountryController {
 
     @GetMapping("/countries/{id}/population")
     public Optional<Long> getPopulation(@PathVariable int id) {
-        return Optional.ofNullable(countryService.getPopulation(id).orElseThrow(() -> new RuntimeException()));
+        return countryService.getPopulation(id);
     }
 
     @GetMapping("/countries/{continent}/countries")
 
-    public Stream<Object> getCountriesOnContinent(@PathVariable String continent) {
+    public List<Country> getCountriesOnContinent(@PathVariable String continent) {
 
         return countryService.getCountryOnContinent(continent);
     }
@@ -62,9 +62,9 @@ public class CountryController {
 
     @GetMapping("/countries/{neighbour1}/{neighbour2}")
 
-    public Optional<List<Country>> getCountryThanNeighbours(@PathVariable String neighbour1,
+    public List<Country> getCountryThanNeighbours(@PathVariable String neighbour1,
                                                             @PathVariable String neighbour2) {
-        return Optional.ofNullable(countryService.getCountryThanNeighbours(neighbour1, neighbour2));
+        return countryService.getCountryThanNeighbours(neighbour1, neighbour2);
     }
 
     @GetMapping("/population/{country}")

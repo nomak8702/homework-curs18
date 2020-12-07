@@ -1,4 +1,4 @@
-package ro.fasttrackit.homework.curs18.homework.WebCountries;
+package ro.fasttrackit.homework.curs18.homework.webcountries;
 
 import org.springframework.stereotype.Service;
 
@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.*;
@@ -42,18 +44,16 @@ public class CountryService {
     }
 
     public Optional<Long> getPopulation(int id) {
-        return countries.stream()
+        return Optional.of(countries.stream()
                 .filter(c -> c.getId() == id)
                 .map(Country::getPopulation)
-                .findFirst();
+                .findFirst()).orElseThrow(RuntimeException::new);
     }
 
-    public Stream<Object> getCountryOnContinent(String continent) {
+    public List<Country> getCountryOnContinent(String continent) {
         return countries.stream()
                 .filter(c -> c.getContinent().equalsIgnoreCase(continent))
-                .flatMap(c -> Stream.of(c.getId(), c.getName(), c.getCapital(),
-                        c.getPopulation(), c.getArea(), c.getContinent(), c.getNeighbours()))
-                .distinct();
+                 .collect(toList());
     }
 
     public List<List<String>> getNeighbours(int id) {
@@ -73,13 +73,10 @@ public class CountryService {
 
     public List<Country> getCountryThanNeighbours(String neighbour1, String neighbour2) {
 
-        List<Country> result = new ArrayList<>();
-        for (Country ctry : countries) {
-            if (ctry.getNeighbours().contains(neighbour1) && !ctry.getNeighbours().contains(neighbour2)) {
-                result.add(ctry);
-            }
-        }
-        return result.size() > 0 ? result : new ArrayList<>();
+        return countries.stream()
+                .filter(c->c.getNeighbours().contains(neighbour1))
+                .filter(Predicate.not(c->c.getNeighbours().contains(neighbour2)))
+                .collect(toList());
     }
 
     public Map<String, Long> getPopulationCountry(String country) {

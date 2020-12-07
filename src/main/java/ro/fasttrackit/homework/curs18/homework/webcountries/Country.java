@@ -1,4 +1,4 @@
-package ro.fasttrackit.homework.curs18.homework.WebCountries;
+package ro.fasttrackit.homework.curs18.homework.webcountries;
 
 import java.io.Serializable;
 import java.util.*;
